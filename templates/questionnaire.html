@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.css">
+
+    <style>
+        .hide{
+            display:none;
+        }
+    </style>
+
+</head>
+<body>
+<h2>问卷调查首页</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3"></div>
+         <div class="col-lg-9">
+            <button class="btn btn-info" id="add_question">添加</button>
+            <button class="btn btn-info" id="del_question">保存</button>
+
+       <div class="type" >
+              {% for question in question_obj %}
+
+                   <div style="background-color: #cccccc">
+                   <p >问题：{{ forloop.counter }}
+                       <span class="glyphicon glyphicon-remove pull-right"></span>
+                   </p>
+                   <span style="margin-left:40px;margin-bottom:20px" >问题：
+                   </span>
+                   <textarea rows="2" cols="80" >{{ question.caption }}</textarea>
+
+                   <p style="margin-left:40px;margin-top:20px">类型：
+                    <select class="radio_content">
+                        {% for foo in question.question_type%}
+                         <option value="{{ foo.0 }}" >{{foo.1}}</option>
+                        {% endfor %}
+                    </select>
+                   <span style="color: dodgerblue" class="add_content hide" id="content_add">+添加选项</span>
+                   <div class="hide">
+                       <p style="margin-left: 40px" class="content">内容：<input type="">
+                        <span style="margin-left:40px">分值：<input type="number"></span>
+                       </p>
+
+                   </div>
+                   </p>
+                  </div>
+
+             {% endfor %}
+       </div>
+
+</div>
+</div>
+</div>
+
+<script>
+{#    $("#content_add").click(function () {#}
+{#        s='<p style="margin-left: 40px" class="content">内容：<input type=""> <span style="margin-left:40px">分值：<input type="number"></span> </p>'#}
+{##}
+{#    $(".hide").append(s)#}
+{#         });#}
+
+    $('#add_question').click(function(){
+        s='<div style="background-color: #cccccc"> <p >问题：{{ forloop.counter }} <span class="glyphicon glyphicon-remove pull-right"></span> </p> <span style="margin-left:40px;margin-bottom:20px" >问题： </span> <textarea rows="2" cols="80" >{{ question.caption }}</textarea> <p style="margin-left:40px;margin-top:20px">类型： <select class="radio_content"><option value="1">打分</option><option value="2">单选</option><option value="3">评价</option> </select> <span style="color: dodgerblue" class="add_content hide" >+添加选项</span> <div class="hide"> <p style="margin-left: 40px" class="content">内容：<input type="text"> <span style="margin-left: 40px">分值：<input type="number"></span> </p> </div> </p> </div>'
+        $('.type').append(s);
+    });
+
+
+$(function () {
+{#    $('.add_content').click(function () {#}
+{#        $(".content").parent().removeClass('hide')#}
+{#    })#}
+      $(document).on("click",".add_content",function () {
+        $(".content").parent().removeClass('hide')
+    })
+     $(document).on("change",".radio_content",function () {
+            if($(this).val()==2){
+               $(this).next().removeClass('hide')
+            }else{
+                $(this).next().addClass('hide')
+            }
+        })
+
+        $(document).on("click",".pull-right",function () {
+            $(this).parent().parent().remove()
+
+        })
+})
+
+{#        $('.radio_content').change(function () {#}
+{#           alert($(this).val())#}
+{#            if($(this).val()==2){#}
+{#               $(".add_content").removeClass('hide')#}
+{#            }else{#}
+{#                $(".add_content").addClass('hide')#}
+{#            }#}
+{#        })#}
+{#        $('.pull-right').click(function () {#}
+{#            $(this).parent().parent().remove()#}
+{##}
+{#        })#}
+{#})#}
+
+
+</script>
+
+</body>
+</html>
